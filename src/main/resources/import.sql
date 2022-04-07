@@ -54,9 +54,9 @@ INSERT INTO facturas_items (cantidad, factura_id, producto_id) VALUES(3, 2, 6);
 
 
 /* Creamos algunos usuarios con sus roles */
-INSERT INTO `users` (username, password, enabled) VALUES ('marcelo','$2a$10$GE2ewIjmL.93Rr9xLRCrU.eEkAzK2EeES9cBXotMFQjCzwtgO9ZqW',1);
-INSERT INTO `users` (username, password, enabled) VALUES ('admin','$2a$10$YBoybNStFCIGuT07W1dBy.h4bdx9tv6c82aMnOMiXhGMS4tj9pFga',1);
+INSERT INTO users (username, password, enabled) VALUES ('marcelo','$2a$10$GE2ewIjmL.93Rr9xLRCrU.eEkAzK2EeES9cBXotMFQjCzwtgO9ZqW',true);
+INSERT INTO users (username, password, enabled) VALUES ('admin','$2a$10$YBoybNStFCIGuT07W1dBy.h4bdx9tv6c82aMnOMiXhGMS4tj9pFga',true);
 
-INSERT INTO `authorities` (user_id, authority) VALUES (1,'ROLE_USER');
-INSERT INTO `authorities` (user_id, authority) VALUES (2,'ROLE_ADMIN');
-INSERT INTO `authorities` (user_id, authority) VALUES (2,'ROLE_USER');
+INSERT INTO authorities (user_id, authority) VALUES (1,'ROLE_USER');
+INSERT INTO authorities (user_id, authority) VALUES (2,'ROLE_ADMIN');
+INSERT INTO authorities (user_id, authority) VALUES (2,'ROLE_USER');
