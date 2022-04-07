@@ -3,7 +3,7 @@
 <head th:replace="layout/base :: head"></head>
 <body>
 
-	<header th:replace="Layout/base :: header"></header>
+	<header th:replace="layout/base :: header"></header>
 
 	<div class="container py-4">
 		<a th:href="@{'/ver/' + ${factura.cliente.id}}"
@@ -81,7 +81,7 @@
 		</div>
 	</div>
 
-	<footer th:replace="Layout/base :: footer"></footer>
+	<footer th:replace="layout/base :: footer"></footer>
 	<script type="text/javascript"
 		th:replace="factura/js/autocomplete-productos :: javascript"></script>
 
