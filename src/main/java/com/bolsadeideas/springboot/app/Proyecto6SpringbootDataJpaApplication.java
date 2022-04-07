@@ -28,8 +28,8 @@ public class Proyecto6SpringbootDataJpaApplication implements CommandLineRunner 
 		
 		String password= "sasasa";
 		
-		for(int i=0;i<2; i++) {
-			//Se generan 2 encriptaciones diferentes para un mismo password.
+		for(int i=0;i<3; i++) {
+			//Se generan 3 encriptaciones diferentes para un mismo password.
 			String bcryptPassword= passwordEncoder.encode(password);
 			System.out.println(bcryptPassword);
 		}
