@@ -158,7 +158,7 @@ public class ClienteController {
 	
 	@Secured("ROLE_ADMIN")
 	@RequestMapping(value = "/form", method = RequestMethod.POST)
-	public String guardar(@Valid Cliente cliente, BindingResult result, Model model, @RequestParam("file") MultipartFile foto, RedirectAttributes flash, SessionStatus status) {
+	public String guardar(@Valid Cliente cliente, BindingResult result, Model model, /*@RequestParam("file") MultipartFile foto,*/ RedirectAttributes flash, SessionStatus status) {
 		/*Se recibe objeto cliente que viene con los datos poblados del formulario.
 		Posteriormente se guarda con el metodo save del DAO.*/
 		
@@ -177,6 +177,7 @@ public class ClienteController {
 			return "form";
 		}
 		
+		/*
 		if(!foto.isEmpty()) {
 			//Obteniendo la ruta donde se guardara la imagen, uploads. En string rootPath almacenamos la ruta absoluta. Es decir, desde c://.
 			//Path directorioRecursos = Paths.get("src//main//resources//static//uploads");
@@ -198,6 +199,7 @@ public class ClienteController {
 			cliente.setFoto(uniqueFilename);
 		
 		}
+		*/
 		
 		//Es cliente.getid distinto de null? Almacena primer texto en mensajeFlash si es true, si no, almacena el segundo.
 		String mensajeFlash= (cliente.getId()!=null)? "Cliente editado con exito" : "Cliente creado con exito";
