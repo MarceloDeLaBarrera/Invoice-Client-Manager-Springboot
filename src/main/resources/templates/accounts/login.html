@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://ww.thymeleaf.org">
+<head th:replace="layout/base :: head"></head>
+<body>
+    <header th:replace="Layout/base :: header"></header>
+    <div class="container py-4">
+        <div class="card bg-Light">
+           <div class="card-header text-center" > Por favor, inicie sesión.</div>
+            <div class="card-body">
+                <h4 class="card-title"></h4>
+                
+                <form th:action="@{/login}" method="POST">
+                
+                <div class="form-group col-sm-6">
+                <input type="text" / name="username" id="username" class="form-control" placeholder="Username" required="required" autofocus="autofocus">
+                </div>
+                
+                <div class="form-group col-sm-6">
+                <input type="password" name="password" id="password" class="form-control" placeholder="Password"/>
+                </div>
+                
+                <div class="form-group col-sm-6">
+                <input type="submit" class="btn btn-primary btn-block btn-lg" value="Sign In" />
+                </div>
+                
+                <!-- El csrf token ya viene incluido de forma automatica, no es necesario especificarlo, ya que se duplicaria, aunque no genera errores.
+                <input type="hidden" th:name="${_csrf.parameterName} " th:value="${_csrf.token}">
+                 -->
+                
+                </form>
+                
+            </div>
+        </div>
+    </div>
+    <footer th:replace="Layout/base :: footer"></footer>
+</body>
+</

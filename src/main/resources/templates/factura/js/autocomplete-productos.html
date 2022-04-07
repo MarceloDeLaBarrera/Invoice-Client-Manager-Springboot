@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://ww.thymeleaf.org">
+<body>
+    <script type="text/javascript" th:fragment= "javascript">
+    
+    //# para acceder al id.
+    //autocomplete recibe un objeto con 2 metodos importantes, el source que se encarga de realizar la peticion AJAX, y el metodo select que se encarga de procesar el resultado y hacer algo con dichos datos.
+    //Dentro del metodo source, se invoca metodo ajax, al cual se le pasará un objeto con todos diferentes parametros junto al metodo success para manejar la response.
+    //success recibe los datos para poder pasarlos al autocomplete. 
+    //Dentro del metodo select, "ui" es un objeto que contiene los datos de la respuesta.
+    //Metodo select permite manejar un valor una vez seleccionado en el autocomplete.
+    
+    buscar_input= document.getElementById("buscar_producto");
+    
+    $(document).ready(function(){
+	$("#buscar_producto").autocomplete({
+		
+		source: function(request, response){
+			$.ajax({
+				url: "/factura/cargar-productos/" + request.term,
+				dataType: "json",
+				data: {
+					term: request.term
+				},
+				success: function(data){
+					response($.map(data, function(item){
+						return {
+							value: item.id,
+							label: item.nombre,
+							precio: item.precio,
+						};
+					}));
+				},
+			});
+		},
+		//metodo focus, por su interior, sirve para que el input al ser seleccionado, muestre el nombre del producto, ya que si no, muestra la id.
+		focus: function(event, ui){
+		    event.preventDefault();
+		    $('input[name="buscar_producto"]').val(ui.item.label);
+		},
+		
+		select: function(event, ui){
+			//$("#buscar_producto").val(ui.item.label);
+			
+			if(itemsHelper.hasProducto(ui.item.value)){
+			    itemsHelper.incrementaCantidad(ui.item.value, ui.item.precio);
+			    return false;
+			}
+	
+			//Se remplazan los valores de la tabla oculta plantilla.
+			//Metodo .html permite modificar u agregar contenido.
+			var linea= $("#plantillaItemsFactura").html();
+			linea= linea.replace(/{ID}/g, ui.item.value);
+			linea= linea.replace(/{NOMBRE}/g, ui.item.label);
+			linea= linea.replace(/{PRECIO}/g, ui.item.precio);
+			
+			//Luego se añade en el body de la tabla visible, la linea respectiva.
+			$("#cargarItemProductos tbody").append(linea);
+			
+			itemsHelper.calcularImporte(ui.item.value, ui.item.precio, 1);
+			
+			return false;
+		}
+	});
+	//Despues de enviar el formulario, se elimina la plantilla ya que si no tomaria al input de la plantilla como una linea mas, y lanzara error.
+	$("form").submit(function(){
+	    $("#plantillaItemsFactura").remove();
+	    return;
+	})
+});
+    
+    var itemsHelper= {
+	    
+	    calcularImporte: function(id,precio,cantidad){
+			var total= $("#total_importe_" + id).html(parseInt(precio) * parseInt(cantidad));
+			var valor_total= parseInt(precio) * parseInt(cantidad)
+			this.calcularGranTotal();
+			if(valor_total == 0){
+			    this.eliminarLineaFactura(id);
+			    console.log("elimina si total es 0")
+			}
+			return total;
+	    },
+	    hasProducto: function(id){
+			var resultado= false;
+			$('input[name="item_id"]').each(function(){
+			    //Si id = al valor del input actual.
+			    if(parseInt(id) == parseInt($(this).val() ) ){
+					console.log("Son iguales");
+					resultado=true;
+			    }
+			});
+			return resultado;
+	    },
+	    incrementaCantidad: function(id, precio){
+			var cantidad= $("#cantidad_" + id).val() ? parseInt($("#cantidad_" + id).val()) : 0 ;
+			$("#cantidad_" + id).val(++cantidad);
+			this.calcularImporte(id,precio,cantidad);
+	    },
+	    eliminarLineaFactura: function(id){
+		$("#row_" + id).remove();
+		this.calcularGranTotal();
+	    },
+	    calcularGranTotal: function(){
+		var total= 0;
+		$('span[id^="total_importe_"]').each(function(){
+		    total+= parseInt($(this).html());
+		});
+		$('#gran_total').html(total);
+	    }
+    }
+    </script>
+</body>
+</html>

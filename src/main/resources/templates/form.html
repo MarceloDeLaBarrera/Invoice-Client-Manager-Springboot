@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/base :: head">
+
+</head>
+<body>
+
+	<header th:replace="layout/base :: header"></header>
+
+	<div class="container py-4">
+		<div class="card">
+
+			<div class="card-body">
+				<h1 th:text="${titulo}"
+					class="text-primary border border-success border-top-0 border-left-0 border-right-0"></h1>
+
+				<div th:object="${cliente}" th:remove="tag">
+					<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger">
+						<li th:each="error: ${#fields.errors('*')}" th:text="${error}"></li>
+					</ul>
+				</div>
+
+
+
+				<form th:action="@{/form}" th:object="${cliente}" method="POST" enctype="multipart/form-data">
+				<!-- Para la subida de archivos, es necesario definir el enctype -->
+
+					<table class="table table-bordered">
+						<tr>
+							<td>Nombre</td>
+							<td><input type="text" th:field="*{nombre}"
+								class="form-control" /></td>
+							<td><small class="form-text text danger"
+								th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}"></small></td>
+						</tr>
+
+						<tr>
+							<td>Apellido</td>
+							<td><input type="text" th:field="*{apellido}"
+								class="form-control" /></td>
+							<td><small class="form-text text danger"
+								th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}"></small></td>
+						</tr>
+
+						<tr>
+							<td>Email</td>
+							<td><input type="email" th:field="*{email}"
+								class="form-control" /></td>
+							<td><small class="form-text text danger"
+								th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></small></td>
+						</tr>
+						
+						<tr>
+							<td>Foto</td>
+							<td><input type="file" name="file"
+								class="form-control" /></td>
+							<td></td>
+						</tr>
+
+						<tr>
+							<td><input type="submit" class="btn btn-primary"
+								th:value="${botonEnviar}" /></td>
+						</tr>
+
+
+					</table>
+					<input type="hidden" th:field="*{id}" />
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<footer th:replace="layout/base :: footer"></footer>
+</body>
+</html>
