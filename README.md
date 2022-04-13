@@ -18,7 +18,7 @@ _Do all the changes that you want, don't worry the database will drop and autocr
 
 _This project was deployment on heroku. You can see it here:_
 
-- [To Do List](https://invoice-manager-springboot.herokuapp.com/)
+- [Invoice/Client Manager](https://invoice-manager-springboot.herokuapp.com/)
 
 _Note: You can test my app with this credentials:_
 
@@ -30,7 +30,6 @@ Password: sasasa
 ## Screenshot ⭐
 
 ![image](https://user-images.githubusercontent.com/52224826/163121318-806c3f77-50b8-4dfb-9168-0916ff2a9dd1.png)
-
 
 ## Starting 🚀
 
